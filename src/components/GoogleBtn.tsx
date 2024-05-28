@@ -1,10 +1,8 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 function GoogleLoginBtn() {
-  const router = useRouter();
   return (
     <button
       onClick={async () => {

@@ -25,7 +25,7 @@ const handler = NextAuth({
         email: {},
         password: {},
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         if (!credentials?.email || !credentials.password) {
           throw new Error("All field is required");
         }
@@ -65,21 +65,18 @@ const handler = NextAuth({
           .insert(UsersTable)
           .values({
             name: user.name!,
-            provider: account?.type!,
+            provider: account?.provider!,
             email: user.email!,
             imgUrl: user.image!,
           })
           .onConflictDoNothing();
-        console.log({ user });
         return true;
       } else {
         return false;
       }
     },
-    async jwt({ trigger, token, session, user }) {
+    async jwt({ trigger, token, session, user, account }) {
       if (trigger === "update") {
-        console.log("trigger session : ", user);
-
         token = {
           ...token,
           name: session.name,
@@ -89,7 +86,7 @@ const handler = NextAuth({
         return token;
       }
 
-      if (user) {
+      if (user && account?.type !== "credentials") {
         const [dbUser] = await db
           .select()
           .from(UsersTable)
@@ -97,16 +94,14 @@ const handler = NextAuth({
         token = {
           ...token,
           sub: dbUser.id.toString(),
-          name: user.name,
-          email: user.email,
-          picture: user.image,
+          name: dbUser.name,
+          email: dbUser.email,
+          picture: dbUser.imgUrl,
         };
       }
-      console.log({ token });
-
       return token;
     },
-    session({ session, token, trigger }) {
+    session({ session, token }) {
       session.user = {
         email: token.email,
         image: token.picture,
