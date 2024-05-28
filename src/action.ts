@@ -4,6 +4,7 @@ import { hash } from "argon2";
 import db from "./drizzle/db";
 import { UsersTable } from "./drizzle/schema";
 import { eq } from "drizzle-orm";
+import { User } from "next-auth";
 
 type TRegister = {
   name: string;
@@ -60,3 +61,16 @@ export const registerAction = async (prevState: any, data: FormData) => {
     type: "success",
   };
 };
+
+// export const upsertUser = async (user: User, provider: string) => {
+//   await db.insert(UsersTable).values({
+//     email: user.email!,
+//     imgUrl: user.image,
+//     name: "asdas",
+//     password: "asdsa",
+//     provider: provider,
+//     createdAt: new Date(),
+//     updatedAt: new Date(),
+//     id: 1
+//   });
+// };

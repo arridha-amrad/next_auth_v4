@@ -25,7 +25,10 @@ export default function UpdateUserForm() {
         className="flex p-2 items-center gap-4 w-full h-fit"
         action={async (data) => {
           const response = await updateUserAction(data);
-          await update(response);
+
+          if (response) {
+            await update(response);
+          }
           router.refresh();
         }}
       >

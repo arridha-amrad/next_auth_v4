@@ -1,7 +1,6 @@
 "use client";
 
 import { ChangeEvent, useRef, useState } from "react";
-import { className } from "../login/FormLogin";
 import { useFormState } from "react-dom";
 import { registerAction } from "@/action";
 import SubmitButton from "./SubmitBtn";
@@ -9,6 +8,13 @@ import SubmitButton from "./SubmitBtn";
 const intitialState = {
   message: "",
   type: "",
+};
+
+const className = {
+  input:
+    "border border-slate-600 outline-none p-2 bg-neutral-800 rounded focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-slate-800 transition duration-200 ease-linear",
+  button:
+    "bg-blue-500 text-white self-end w-[6rem] rounded p-2 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-blue-50 transition duration-200 ease-linear",
 };
 
 function FormRegister() {

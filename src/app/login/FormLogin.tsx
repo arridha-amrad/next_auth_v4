@@ -1,5 +1,4 @@
 "use client";
-
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
@@ -30,8 +29,8 @@ function FormLogin() {
       if (response && !response.ok) {
         setError(response.error ?? "");
       } else {
-        router.refresh();
         router.replace("/");
+        router.refresh();
       }
     } catch (err) {
       console.log("myError : ", err);
